@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using authapi.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,13 @@ namespace authapi.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly IUserRepository _repository;
+
+        public AuthController(IUserRepository repository)
+        {
+            _repository = repository;
+        }
+
         [HttpGet]
         public IActionResult Hello() 
         {
