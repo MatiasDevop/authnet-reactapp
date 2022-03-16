@@ -1,4 +1,5 @@
 using authapi.Data;
+using authapi.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +35,7 @@ namespace authapi
             services.AddControllers();
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<JwtService>();
 
             services.AddSwaggerGen(c =>
             {
