@@ -57,6 +57,12 @@ namespace authapi
 
             app.UseRouting();
 
+            app.UseCors(options => options
+                .WithOrigins(new []{"http://localhost:3000", "http://localhost:8080", "http://localhost:4200"})// Angular, Vue, React
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+            );
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

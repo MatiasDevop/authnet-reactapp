@@ -51,9 +51,47 @@ namespace authapi.Controllers
 
             var jwt = _jwtService.Generate(user.Id);
 
+            Response.Cookies.Append("jwt", jwt, new CookieOptions
+            {
+                HttpOnly = true
+            });
+
             return Ok(new
             {
-                jwt
+               message = "success"
+            });
+        }
+
+        [HttpGet("user")]
+        public IActionResult User()
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+
+                var token = _jwtService.Verify(jwt);
+
+                int userId = int.Parse(token.Issuer);
+
+                var user = _repository.GetById(userId);
+
+                return Ok(user);
+            }
+            catch (Exception _)
+            {
+                return Unauthorized();
+            }
+            
+        }
+
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("jwt");
+
+            return Ok(new
+            {
+                message = "success"
             });
         }
     }

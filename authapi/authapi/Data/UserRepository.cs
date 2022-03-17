@@ -25,5 +25,10 @@ namespace authapi.Data
         {
             return _context.Users.FirstOrDefault(u => u.Email == email);
         }
+
+        public User GetById(int id)
+        {
+            return _context.Users.FirstOrDefault(u => u.Id == id);
+        }
     }
 }
